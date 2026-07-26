@@ -77,6 +77,10 @@ export function fmtBRLShort(v) {
   return `R$${n.toFixed(0)}`;
 }
 export function pad2(n) { return String(n).padStart(2, "0"); }
+export function lastDayOfMonth(monthKey) {
+  const [y, m] = monthKey.split("-").map(Number);
+  return new Date(y, m, 0).getDate(); // day 0 of next month = last day of this month
+}
 export function monthKeyOf(d) { return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}`; }
 export function todayISO() { return new Date().toISOString().slice(0, 10); }
 export function fmtDatePt(iso) {
