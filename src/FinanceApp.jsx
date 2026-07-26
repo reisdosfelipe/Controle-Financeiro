@@ -3,7 +3,7 @@ import { supabase } from "./supabaseClient.js";
 import {
   MONTHS_PT, MONTHS_SHORT, DEFAULT_CATEGORIES, THEMES,
   fmtBRL, pad2, monthKeyOf, todayISO, rowToEntry, entryToRow,
-  rowToTemplate, templateToRow, computeMissingRecurring,
+  rowToTemplate, templateToRow, computeMissingRecurring, lastDayOfMonth,
 } from "./lib.js";
 import { HISTORICAL_ENTRIES } from "./historicalData.js";
 import { Icon } from "./components/Icon.jsx";
@@ -97,7 +97,7 @@ export default function FinanceApp({ user }) {
   const loadMonthNow = useCallback(async () => {
     setLoadingMonth(true);
     const start = `${monthKey}-01`;
-    const end = `${monthKey}-31`;
+    const end = `${monthKey}-${pad2(lastDayOfMonth(monthKey))}`;
     try {
       const { data, error: qErr } = await supabase.from("entries").select("*").gte("date", start).lte("date", end).order("date", { ascending: false });
       if (qErr) throw qErr;
